@@ -1,0 +1,7 @@
+{
+  "name": "EstateNexus Investment Calculator",
+  "description": "A high-fidelity real estate investment prototype for developers to evaluate land feasibility, construction costs, and project profitability with interactive visual analytics.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
