@@ -53,10 +53,12 @@ const AIAnalysis: React.FC<AIAnalysisProps> = ({ project, results }) => {
   };
 
   const generateAnalysis = async () => {
-    const apiKey = (window as any).process?.env?.API_KEY;
+    // FIX 1: Use process.env directly so Vite can replace it during build
+    // @ts-ignore
+    const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY || (window as any).process?.env?.API_KEY;
     
-    if (!apiKey) {
-      setError("AI Service Unavailable: Missing API configuration.");
+    if (!apiKey || apiKey === 'PLACEHOLDER_API_KEY') {
+      setError("AI Service Unavailable: Missing API Key in Vercel Environment Variables.");
       return;
     }
 
@@ -99,6 +101,7 @@ const AIAnalysis: React.FC<AIAnalysisProps> = ({ project, results }) => {
       `;
 
       const response = await ai.models.generateContent({
+        // --- EDW EXEI GINEI H ALLAGI SE GEMINI 3 ---
         model: 'gemini-3-flash-preview',
         contents: prompt,
         config: {
